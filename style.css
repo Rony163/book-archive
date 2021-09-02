@@ -2,3 +2,9 @@
 #not-found{
     display: none;
 }
+
+/* Image Size */
+.image-size{
+    height: 400px;
+    width: 300px;
+}
