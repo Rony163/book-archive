@@ -1,0 +1,4 @@
+/* For not showing no match result */
+#not-found{
+    display: none;
+}
