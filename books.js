@@ -4,20 +4,34 @@ function searchBooks() {
     const searchText = searchField.value;
     searchField.value = '';
 
-    fetch(`http://openlibrary.org/search.json?q=${searchText}`)
+    fetch(`https://openlibrary.org/search.json?q=${searchText}`)
         .then(res => res.json())
-        .then(data => displayBook(data.docs));
+        .then(data => displayBook(data));
 }
 
 const displayBook = booksInfo => {
+    const books = booksInfo.docs;
     const container = document.getElementById('result');
-    booksInfo.forEach(bookInfo => {
-        console.log(bookInfo);
+    const newDiv = document.createElement('div');
+    newDiv.innerHTML = `<p class="text-center text-info mt-3">Search Result Found: ${booksInfo.numFound}</p>`;
+    container.appendChild(newDiv);
+
+
+    const newContainer = document.getElementById('book-data');
+    books.forEach(bookInfo => {
+        // console.log(bookInfo);
         const div = document.createElement('div');
         div.innerHTML = `
-        <h2>Book Name: ${bookInfo.title}</h2>
-        <h3>Author Name: ${bookInfo.author_name[0]} </h3>
-        `;
-        container.appendChild(div);
-    })
+            <div class="col">
+            <div class="card">
+                <img src="https://covers.openlibrary.org/b/id/${bookInfo.cover_i}-M.jpg" class="card-img-top    img-fluid img-size" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${bookInfo.title}</h5>
+                    <p class="card-text">Author Name: ${bookInfo.author_name}</p>
+                    <p class="card-text">First Published: ${bookInfo.first_publish_year}</p>
+                </div>
+            </div>
+            `;
+        newContainer.appendChild(div);
+    });
 }
